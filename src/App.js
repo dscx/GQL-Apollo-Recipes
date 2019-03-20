@@ -9,8 +9,9 @@ import "./App.css";
 const resolvers = {
   Recipe: {
     isStarred: parent => {
-      const starredRecipes = JSON.parse(localStorage.getItem("starredRecipies")) || [];
-      return starredRecipes.includes(parent.id)
+      const starredRecipes =
+        JSON.parse(localStorage.getItem("starredRecipies")) || [];
+      return starredRecipes.includes(parent.id);
     }
   },
   Mutation: {
