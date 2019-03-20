@@ -9,7 +9,7 @@ const addRecipeMutation = gql`
       id
       title
     }
-  } 
+  }
 `;
 
 export default class AddRecipe extends Component {
@@ -32,7 +32,20 @@ export default class AddRecipe extends Component {
 
   render() {
     return (
-      <Mutation mutation={addRecipeMutation}>
+      <Mutation
+        mutation={addRecipeMutation}
+        refetchQueries={[
+          {
+            query: recipesQuery,
+            variables: { vegetarian: false }
+          },
+          {
+            query: recipesQuery,
+            variables: { vegetarian: true }
+          }
+        ]}
+        awaitRefetchQueries={true}
+      >
         {(addRecipe, { loading, error }) => (
           <form
             onSubmit={evt => {
