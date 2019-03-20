@@ -33,6 +33,7 @@ export default class Recipes extends Component {
         <Query
           query={recipesQuery}
           variables={{ vegetarian: this.state.vegetarian }}
+          pollInterval={3000}
         >
           {({ data, loading, error }) => {
             if (loading) return <p>Loading...</p>;
