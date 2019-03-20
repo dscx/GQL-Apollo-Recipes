@@ -6,8 +6,19 @@ import AddRecipe from "./AddRecipe";
 
 import "./App.css";
 
+const resolvers = {
+  Recipe: {
+    isStarred: () => {
+      return false;
+    }
+  }
+}
+
 const client = new ApolloClient({
-  uri: "http://localhost:4000/"
+  uri: "http://localhost:4000/",
+  clientState: {
+    resolvers
+  }
 });
 
 class App extends Component {
