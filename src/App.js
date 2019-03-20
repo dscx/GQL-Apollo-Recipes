@@ -8,11 +8,33 @@ import "./App.css";
 
 const resolvers = {
   Recipe: {
-    isStarred: () => {
-      return false;
+    isStarred: parent => {
+      const starredRecipes = JSON.parse(localStorage.getItem("starredRecipies")) || [];
+      return starredRecipes.includes(parent.id)
+    }
+  },
+  Mutation: {
+    updateRecipeStarred: (_, variables) => {
+      const starredRecipes =
+        JSON.parse(localStorage.getItem("starredRecipies")) || [];
+      if (variables.isStarred) {
+        localStorage.setItem(
+          "starredRecipies",
+          JSON.stringify(starredRecipes.concat([variables.id]))
+        );
+      } else {
+        localStorage.setItem(
+          "starredRecipies",
+          JSON.stringify(starredRecipes.filter(id => id !== variables.id))
+        );
+      }
+      return {
+        __typeName: "Recipe",
+        isStarred: variables.isStarred
+      };
     }
   }
-}
+};
 
 const client = new ApolloClient({
   uri: "http://localhost:4000/",
